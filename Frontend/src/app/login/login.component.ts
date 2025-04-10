@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -15,12 +17,18 @@ export class LoginComponent {
     password: '',
   };
 
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private authservice: AuthService
+  ) {}
+
   onSubmit() {
     console.log(
       'Form submitted:',
       this.loginData.email,
       this.loginData.password
     );
-    // Add your login logic here
+    this.authservice.Login(this.loginData.email, this.loginData.password);
   }
 }

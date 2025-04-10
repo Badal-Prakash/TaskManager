@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TaskService } from '../task.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../auth.service';
 
 @Component({
   standalone: true,
@@ -17,12 +18,14 @@ export class TaskFormComponent {
     id: 0,
     title: '',
     description: '',
-    status: 'pending',
+    status: '',
+    userId: '',
   };
   constructor(
     private services: TaskService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authservice: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -37,9 +40,80 @@ export class TaskFormComponent {
     }
   }
 
+  // onSubmit() {
+  //   const taskToSend = {
+  //     id: this.task.id,
+  //     title: this.task.title,
+  //     description: this.task.description,
+  //     status: this.task.status,
+  //     userId: this.authservice.getUserId()!,
+  //   };
+  //   console.log('taskToSend:', taskToSend, this.authservice.getUserId());
+
+  //   console.log('Form submitted:', taskToSend);
+  //   this.services.createTask(taskToSend).subscribe({
+  //     next: (response) => {
+  //       console.log('Task created successfully:', response);
+  //     },
+  //     error: (error) => {
+  //       console.error('Error creating task:', error);
+  //     },
+  //     complete: () => {
+  //       console.log('Task creation process completed.');
+  //       this.router.navigate(['/task']);
+  //     },
+  //   });
+  // }
+  // onSubmit() {
+  //   const userId = Number(this.authservice.getUserId());
+  //   console.log('Decoded userId:', this.authservice.getUserId());
+
+  //   if (!userId) {
+  //     console.error('User ID is invalid or not available.');
+  //     return;
+  //   }
+
+  //   const taskToSend = {
+  //     id: this.task.id,
+  //     title: this.task.title,
+  //     description: this.task.description,
+  //     status: this.task.status,
+  //     userId: userId,
+  //   };
+
+  //   console.log('taskToSend:', taskToSend);
+
+  //   this.services.createTask(taskToSend).subscribe({
+  //     next: (response) => {
+  //       console.log('Task created successfully:', response);
+  //     },
+  //     error: (error) => {
+  //       console.error('Error creating task:', error);
+  //     },
+  //     complete: () => {
+  //       console.log('Task creation process completed.');
+  //       this.router.navigate(['/task']);
+  //     },
+  //   });
+  // }
   onSubmit() {
-    console.log('Form submitted:', this.task);
-    this.services.createTask(this.task).subscribe({
+    const userId = this.authservice.getUserId();
+    if (!userId) {
+      console.error('User ID is invalid or not available.');
+      return;
+    }
+
+    const taskToSend = {
+      id: this.task.id,
+      title: this.task.title,
+      description: this.task.description,
+      status: this.task.status,
+      userId: userId,
+    };
+
+    console.log('taskToSend:', taskToSend);
+
+    this.services.createTask(taskToSend).subscribe({
       next: (response) => {
         console.log('Task created successfully:', response);
       },
@@ -47,14 +121,21 @@ export class TaskFormComponent {
         console.error('Error creating task:', error);
       },
       complete: () => {
-        console.log('Task creation process completed.');
         this.router.navigate(['/task']);
       },
     });
   }
+
   onUpdate() {
-    this.services.updateTask(this.task).subscribe({
-      next: (response) => {},
+    const taskToUpdate = {
+      ...this.task,
+      userId: this.authservice.getUserId(),
+    };
+
+    this.services.updateTask(taskToUpdate).subscribe({
+      next: (response) => {
+        console.log('Task updated successfully:', response);
+      },
       error: (error) => {
         console.error('Error updating task:', error);
       },

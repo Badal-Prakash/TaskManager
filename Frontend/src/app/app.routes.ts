@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { TaskComponent } from './task/task.component';
+import { AuthGuard } from './auth.guard';
 
 export const routes: Routes = [
   {
@@ -20,6 +21,7 @@ export const routes: Routes = [
   },
   {
     path: 'task',
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',

@@ -1,12 +1,27 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, computed } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css',
+  styleUrls: ['./header.component.css'],
+  standalone: true,
+  imports: [RouterLink],
 })
 export class HeaderComponent {
-  isLoggedIn: boolean = false;
+  constructor(public authService: AuthService, private router: Router) {}
+
+  isLoggedIn = computed(() => this.authService.isLoggedIn());
+
+  handleAuthClick() {
+    if (this.isLoggedIn()) {
+      this.authService.logout();
+      this.router.navigateByUrl('/login');
+    } else {
+      this.router.navigateByUrl('/login');
+    }
+
+    console.log('Header component isLoggedIn:', this.isLoggedIn());
+  }
 }

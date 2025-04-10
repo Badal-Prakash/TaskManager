@@ -1,3 +1,4 @@
+import { AuthService } from './../auth.service';
 import { Component, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -16,17 +17,26 @@ export class TaskComponent {
   @ViewChild('taskform') taskform!: TaskFormComponent;
   tasks: any[] = [];
 
-  constructor(private taskService: TaskService, private router: Router) {}
+  constructor(
+    private taskService: TaskService,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.getAllTasks();
   }
-
   getAllTasks() {
+    const userId = this.authService.getUserId();
+
     this.taskService.getTasks().subscribe((data: any[]) => {
-      this.tasks = data;
+      console.log('All tasks from backend:', data);
+
+      this.tasks = data.filter((task) => task.userId === userId);
+      console.log('Filtered tasks for userId', userId, ':', this.tasks);
     });
   }
+
   createNewTask() {
     this.router.navigateByUrl('/task/add');
   }
@@ -37,14 +47,6 @@ export class TaskComponent {
   }
 
   editTask(id: number) {
-    // const task = this.tasks.find((task) => task.id === id);
-    // if (task && this.taskform) {
-    //   this.taskform.task = { ...task };
-    //   this.router.navigateByUrl('/task/add');
-    //   console.log('Editing task:', task);
-    // } else {
-    //   console.log('err');
-    // }
     this.router.navigate(['/task/edit', id]);
   }
 }
