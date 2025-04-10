@@ -1,0 +1,65 @@
+<div class="signup-container">
+  <form (ngSubmit)="onSubmit()" #signupForm="ngForm">
+    <h2>Signup</h2>
+
+    <div class="form-group">
+      <label for="name">FullName</label>
+      <input
+        type="text"
+        id="FullName"
+        name="FullName"
+        class="form-control"
+        [(ngModel)]="signupData.FullName"
+        #name="ngModel"
+        required
+      />
+      <div *ngIf="name.invalid && name.touched" class="error">
+        Name is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        class="form-control"
+        [(ngModel)]="signupData.email"
+        #email="ngModel"
+        required
+      />
+      <div *ngIf="email.invalid && email.touched" class="error">
+        Email is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        class="form-control"
+        [(ngModel)]="signupData.password"
+        #password="ngModel"
+        required
+      />
+      <div *ngIf="password.invalid && password.touched" class="error">
+        Password is required.
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="signupForm.invalid"
+    >
+      Signup
+    </button>
+    <div class="below-link">
+      Already have an account?
+      <a class="link-below" [routerLink]="'/login'">Login</a>
+    </div>
+  </form>
+</div>

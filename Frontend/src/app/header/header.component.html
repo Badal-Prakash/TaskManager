@@ -1,0 +1,13 @@
+<header class="header">
+  <div class="logo">Task Manager</div>
+  <nav class="nav-links">
+    <a routerLink="/task" routerLinkActive="active">Tasks</a>
+    <a routerLink="/task/add" routerLinkActive="active">Create</a>
+    <a
+      [routerLink]="isLoggedIn ? '/logout' : '/login'"
+      routerLinkActive="active"
+    >
+      {{ isLoggedIn ? "Logout" : "Login" }}
+    </a>
+  </nav>
+</header>

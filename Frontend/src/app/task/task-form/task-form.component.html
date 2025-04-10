@@ -1,0 +1,50 @@
+<div class="task-form-container">
+  <h2>{{ task.id ? "Update Task" : "Create Task" }}</h2>
+
+  <form (ngSubmit)="task.id !== 0 ? onUpdate() : onSubmit()" #taskForm="ngForm">
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input
+        type="text"
+        id="title"
+        name="title"
+        class="form-control"
+        required
+        [(ngModel)]="task.title"
+        #title="ngModel"
+      />
+      <div *ngIf="title.invalid && title.touched" class="error">
+        Title is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea
+        id="description"
+        name="description"
+        class="form-control"
+        [(ngModel)]="task.description"
+        rows="3"
+      ></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="status">Status</label>
+      <select
+        id="status"
+        name="status"
+        class="form-control"
+        [(ngModel)]="task.status"
+      >
+        <option value="ToDo">To Do</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Done">Done</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-success" [disabled]="taskForm.invalid">
+      {{ task.id ? "Update" : "Create" }} Task
+    </button>
+  </form>
+</div>
