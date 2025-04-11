@@ -1,5 +1,5 @@
 <div class="task-list-container">
-  <h2>User Tasks</h2>
+  <h2>All Tasks</h2>
   <button class="btn btn-primary mb-3" (click)="createNewTask()">
     Add New Task
   </button>
@@ -11,7 +11,7 @@
         <th>Title</th>
         <th>Description</th>
         <th>Status</th>
-        <th style="width: 150px">Actions</th>
+        <!-- <th style="width: 150px">Actions</th> -->
       </tr>
     </thead>
     <tbody>
@@ -20,7 +20,7 @@
         <td>{{ task.title }}</td>
         <td>{{ task.description }}</td>
         <td>{{ task.status }}</td>
-        <td>
+        <!-- <td>
           <button
             class="btn btn-sm btn-warning me-2"
             (click)="editTask(task.id)"
@@ -30,7 +30,7 @@
           <button class="btn btn-sm btn-danger" (click)="deleteTask(task.id)">
             Delete
           </button>
-        </td>
+        </td> -->
       </tr>
     </tbody>
   </table>

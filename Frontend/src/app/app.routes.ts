@@ -5,6 +5,8 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { TaskComponent } from './task/task.component';
 import { AuthGuard } from './auth.guard';
+import { AllTasksComponent } from './task/all-tasks/all-tasks.component';
+import { UsersComponent } from './users/users.component';
 
 export const routes: Routes = [
   {
@@ -18,6 +20,11 @@ export const routes: Routes = [
   {
     path: 'signup',
     component: SignupComponent,
+  },
+  {
+    path: 'users',
+    canActivate: [AuthGuard],
+    component: UsersComponent,
   },
   {
     path: 'task',
@@ -34,6 +41,10 @@ export const routes: Routes = [
       {
         path: 'edit/:id',
         component: TaskFormComponent,
+      },
+      {
+        path: 'alltasks',
+        component: AllTasksComponent,
       },
     ],
   },

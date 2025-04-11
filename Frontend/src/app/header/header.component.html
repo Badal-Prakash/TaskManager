@@ -2,6 +2,8 @@
   <div class="logo">Task Manager</div>
   <nav class="nav-links">
     <a routerLink="/task" routerLinkActive="active">Tasks</a>
+    <a routerLink="/task/alltasks" routerLinkActive="active">All-Tasks</a>
+    <a routerLink="/users" routerLinkActive="active">All Users</a>
     <a routerLink="/task/add" routerLinkActive="active">Create</a>
     <a (click)="handleAuthClick()">
       {{ isLoggedIn() ? "Logout" : "Login" }}

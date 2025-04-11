@@ -1,5 +1,5 @@
 import { AuthService } from './../auth.service';
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TaskService } from './task.service';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   templateUrl: './task.component.html',
   styleUrl: './task.component.css',
 })
-export class TaskComponent {
+export class TaskComponent implements OnInit {
   @ViewChild('taskform') taskform!: TaskFormComponent;
   tasks: any[] = [];
 
